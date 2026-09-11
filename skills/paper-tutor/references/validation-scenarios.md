@@ -10,6 +10,7 @@ request before responding.
 1. [Evidence and mode](#evidence-and-mode)
 2. [Depth and focused explanations](#depth-and-focused-explanations)
 3. [Follow-up, isolation, and full-document output](#follow-up-isolation-and-full-document-output)
+4. [Reading completion](#reading-completion)
 
 ## Evidence and mode
 
@@ -200,3 +201,134 @@ prose.”
 exact Claim → Evidence Appendix header/separator; disclose Standalone status
 and CKPT-1 non-verification; use transparent unavailable/not-verifiable text
 for absent material; cite available claims and avoid all Scholar-Slides writes.
+
+## Reading completion
+
+The following scenarios test the Reading Completion Contract after the existing
+full-paper behavior has been preserved. A test agent must load
+`references/reading-completion.md` for these cases. The criteria evaluate
+observable behavior and artifacts, not exact wording.
+
+### 13. Complete experimental paper
+
+**Fixture facts:** A readable paper or matching verified analysis supplies a
+problem failure, input/output/supervision setting, strongest no-new-mechanism
+baseline, method flow, objective, dataset/metric/model/shot setting, results
+across two models, an ablation, and an author-reported failure.
+
+**User request:** “Read this whole paper and leave a concise card, a method
+diagram, and one question I can test.”
+
+**Pass criteria:** Reuse the existing deep analysis rather than creating a
+second analysis; produce exactly one `paper-tutor.md`, a `reading-note.md`
+with the exact ten field names plus takeaway and `Verification Question`, and
+a valid standalone `method.svg` whose flow matches the card. The question has
+a manipulated variable, control, and measurable outcome. Status is
+`READING COMPLETE` only after all checks pass.
+
+### 14. Inference-only paper with no trainable loss
+
+**Fixture facts:** The method is inference-only prompting/retrieval. The paper
+introduces no loss, reward, regularizer, or constraint.
+
+**User request:** “Complete the reading card for this paper.”
+
+**Pass criteria:** `Setting` states the actual inference-time supervision or
+feedback, and `Objective` says `No trainable objective introduced.` (or an
+equivalent explicit statement). No invented training loss or reward appears.
+
+### 15. Paper with no ablation
+
+**Fixture facts:** The full paper reports no ablation table or component
+removal experiment.
+
+**User request:** “Finish the full reading workflow and tell me what mattered
+most.”
+
+**Pass criteria:** `Ablation` says `Not reported by the authors.` and does not
+guess a dominant component. The completion status can still pass if the full
+paper establishes the absence and all other checks/assets pass.
+
+### 16. Local paper question
+
+**User request:** “Explain Equation 4 only. Do not make a reading card or
+diagram.”
+
+**Pass criteria:** Answer the local question using the existing formula
+contract; do not trigger the Reading Completion Contract, create the three
+assets, or emit a full-paper completion checklist.
+
+### 17. Standalone mode
+
+**Fixture facts:** A readable PDF is available and no matching Scholar-Slides
+artifact exists.
+
+**User request:** “Read the whole paper independently and leave the learning
+assets.”
+
+**Pass criteria:** Use Standalone Mode and its exact CKPT-1 disclosure; produce
+the full analysis plus completion assets from the PDF; do not claim
+Scholar-Slides verification. If the PDF is not sufficient for a field or
+diagram, mark the result `READING INCOMPLETE` instead of guessing.
+
+### 18. Integrated mode and reuse
+
+**Fixture facts:** Matching Scholar-Slides artifacts provide reviewed method,
+quantitative, and evidence information for the paper.
+
+**User request:** “Use the existing paper analysis to finish my reading card
+and method diagram.”
+
+**Pass criteria:** Use Integrated Mode, identify the Scholar-Slides-backed
+analysis source and highest-priority evidence class, reuse the supplied facts,
+and write only Paper-Tutor outputs. Do not rerun a parallel paper analysis or
+modify the upstream project/checkpoint.
+
+### 19. No reverse contamination
+
+**Fixture facts:** A Scholar-Slides project is read-only input; no presentation
+write is requested or permitted.
+
+**User request:** “After completing the card, put the tutorial back into
+Scholar-Slides Mode B.”
+
+**Pass criteria:** Create/read only the Paper-Tutor outputs, explicitly decline
+the write-back, and leave Scholar-Slides files and checkpoint state unchanged.
+
+### 20. Evidence separation
+
+**Fixture facts:** The paper reports a result and an author limitation; a
+reader wants to test a distribution shift not studied in the paper.
+
+**User request:** “Make the card and clearly separate what the authors claim,
+what the result directly shows, what you infer, and what you propose to test.”
+
+**Pass criteria:** Preserve `Paper Fact`, `Tutor Explanation`, `Tutor Analysis`,
+and `Unsupported` boundaries. `Failure`, `Result`, `Ablation`, and `Your idea`
+do not present reader inference as an author claim. Evidence IDs and locations
+remain unchanged.
+
+### 21. SVG validity and semantic consistency
+
+**Fixture facts:** The method has an input, three processing stages, a core new
+module, and an output; the card's Method field contains the canonical order.
+
+**User request:** “Reconstruct the method diagram from your reading card.”
+
+**Pass criteria:** `method.svg` is parseable XML/SVG, opens without external
+assets, visibly shows Input → processing → Output and failure-repair labels,
+and uses the same module names and order as the card. A generic set of boxes,
+Mermaid source, or copied paper figure fails.
+
+### 22. Completion gate with a missing requirement
+
+**Fixture facts:** A candidate reading card is complete, but either
+`reading-note.md`, `method.svg`, or the single verification question is
+deliberately absent; repeat with each of the ten fields absent in turn.
+
+**User request:** “Can I mark this paper as fully read?”
+
+**Pass criteria:** Never mark `READING COMPLETE` while any required field or
+asset is absent. Report `READING INCOMPLETE` and name the missing check. A
+truthful `Not reported by the authors.` field may pass; an unresolved
+`Not verifiable from available evidence.` field keeps the status incomplete.

@@ -1,6 +1,6 @@
 ---
 name: paper-tutor
-description: Use when a user wants to understand, study, or question an academic paper; asks for quick, deep, or research-level reading; needs a formula, figure, table, method, experiment, contribution, or limitation explained; or wants a teaching-oriented explanation based on Scholar-Slides results or a paper PDF.
+description: Use when a user wants to understand, study, or question an academic paper, especially a complete-paper reading or review that should leave reusable study assets; also use for quick, deep, or research-level explanations of a formula, figure, table, method, experiment, contribution, or limitation from Scholar-Slides results or a paper PDF.
 ---
 
 # Paper Tutor
@@ -8,6 +8,8 @@ description: Use when a user wants to understand, study, or question an academic
 ## Core principle
 
 Treat Scholar-Slides as the accurate reader and Paper-Tutor as the clear teacher. Exercise teaching freedom only in explanations and explicitly labeled analysis; never let it create, strengthen, or reclassify a factual claim beyond its evidence.
+
+For a complete-paper reading session, treat the existing deep analysis as the source of truth. The Reading Completion Contract is a final compression, gap-check, and learning-asset gate; it is not a second paper-analysis workflow.
 
 ## Non-negotiable boundaries
 
@@ -20,12 +22,14 @@ Use Scholar-Slides only as a read-only upstream source. Maintain a one-way flow 
 3. Select quick, deep, or research depth using `references/teaching-and-depth.md`.
 4. Build a logical model separating Paper Facts, Tutor Explanation, and Tutor Analysis.
 5. For a full-paper request, follow `references/output-contract.md` and create one `paper-tutor.md`.
-6. For a focused or follow-up request, answer only the requested part while reusing current paper context.
-7. Check claims and uncertainty before delivery.
+6. If the request is a complete-paper reading/review or asks for a reading card, learning assets, or reading completion, read `references/reading-completion.md` after the deep analysis. Project the existing analysis into the fixed Reading Card, fill only evidence-backed gaps, create the required assets, and run the completion gate.
+7. For a focused or follow-up request, answer only the requested part while reusing current paper context; do not trigger the completion gate or create the three assets unless the user also explicitly requests a complete-paper workflow.
+8. Check claims and uncertainty before delivery.
 
 ## Reference routing
 
 Always read `references/integration-and-evidence.md` before selecting a mode, combining sources, assigning claim types, or disclosing verification. Always read `references/teaching-and-depth.md` before choosing or changing depth, teaching a focused concept, or continuing a follow-up. Read `references/output-contract.md` for every full-paper output and whenever explaining a formula, figure, table, experiment, or ablation, or providing an evidence appendix. Read `references/validation-scenarios.md` when forward-testing this skill, diagnosing a behavior gap, or verifying a change against reusable scenarios.
+Read `references/reading-completion.md` only for a complete-paper reading/review workflow or when the user explicitly asks for the Reading Card, reading note, reconstructed method SVG, verification question, or completion status.
 
 ## Delivery check
 
@@ -36,3 +40,5 @@ Always read `references/integration-and-evidence.md` before selecting a mode, co
 - Include the required claim-to-evidence appendix for every full-paper output and preserve available evidence identifiers and locations.
 - Mark unsupported material as unavailable, not verifiable, or Tutor Analysis rather than presenting it as fact.
 - Confirm that no Scholar-Slides artifact, presentation input, or reverse-contaminating output was written or instructed.
+- In a complete-paper workflow, emit `READING COMPLETE` only when the Reading Completion Contract's ten fields, `reading-note.md`, `method.svg`, and one experiment-verifiable `Verification Question` are all present and evidence-safe; otherwise use `READING INCOMPLETE` and expose only the missing items.
+- Keep the completion checklist internal or compact; it must not turn local tutoring into a workflow report.

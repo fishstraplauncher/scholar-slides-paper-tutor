@@ -150,7 +150,13 @@ extraction.
 Keep the Scholar-Slides boundary strictly one-way. Paper-Tutor never writes to
 Scholar-Slides artifacts, and Paper-Tutor prose never enters Mode B. Do not
 modify Scholar-Slides outputs, feed teaching prose back into Scholar-Slides, or
-make a presentation a required input.
+make a presentation a required input. In an Integrated complete-paper session,
+the `paper-tutor.md`, `reading-note.md`, and `method.svg` outputs belong to the
+Paper-Tutor output directory; if the only available directory is a
+Scholar-Slides project, use a separate Paper-Tutor output directory rather than
+placing new files beside or inside its artifacts. The Reading Completion
+Contract may consume matching upstream analysis but never changes its source
+or its checkpoint state.
 
 When evidence is insufficient, use concrete language such as:
 

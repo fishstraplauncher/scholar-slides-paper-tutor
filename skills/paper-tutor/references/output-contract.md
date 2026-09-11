@@ -9,7 +9,7 @@
 
 ## Output boundary
 
-Produce a focused answer for a focused request. Produce exactly one `paper-tutor.md` for a full-paper request. Apply paper identity, mode, verification, claim labels, source priority, conflict handling, and the caption-only `overview` safety rule from [integration-and-evidence.md](integration-and-evidence.md); do not duplicate or weaken them here.
+Produce a focused answer for a focused request. Produce exactly one `paper-tutor.md` for a full-paper request. When the request is a complete-paper reading session, additionally follow [reading-completion.md](reading-completion.md) to produce the compressed `reading-note.md` and reconstructed `method.svg`; these are projections of the one deep analysis, not another full analysis. Apply paper identity, mode, verification, claim labels, source priority, conflict handling, and the caption-only `overview` safety rule from [integration-and-evidence.md](integration-and-evidence.md); do not duplicate or weaken them here.
 
 Use transparent `Not present in the available source.` or `Not verifiable from the available evidence.` text whenever required material is absent. Never fill a section with plausible but invented material. Keep simple or obvious sections concise and explain complex core concepts in detail.
 
